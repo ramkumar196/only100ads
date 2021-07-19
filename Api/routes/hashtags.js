@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 const { body,check,header,param,validationResult, query } = require('express-validator');
 var hashtagModel = require('../models/hashtags');
-//AKIAQ4PBLAIH5PV4VS5P
-//X/Mc/R5xer9RD+/muLvEfB5HF4QaEBMq7lhnD7gd
-
 router.get('/list',
 //body('adText').not().isEmpty().withMessage('must not be empty'),
 //body('adSlot').not().isEmpty().withMessage('must not be empty'),

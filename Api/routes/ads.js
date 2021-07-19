@@ -12,8 +12,6 @@ var Jimp = require('jimp');
 const { formatAdResponse, extractHastags, replaceHastags } = require('../utils/formatResponse')
 
 var { putS3Object, getS3Object } = require('../utils/s3Functions');
-//AKIAQ4PBLAIH5PV4VS5P
-//X/Mc/R5xer9RD+/muLvEfB5HF4QaEBMq7lhnD7gd
 var multer = require('multer')
 
 var storage = multer.diskStorage({
