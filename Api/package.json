@@ -1,0 +1,39 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "compilerOptions": {
+    "target": "es2016"
+  },
+  "scripts": {
+    "start": "node --experimental-modules ./bin/www"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.3.0",
+    "@aws-sdk/node-http-handler": "^3.3.0",
+    "@aws-sdk/types": "^3.3.0",
+    "aws-sdk": "^2.943.0",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
+    "express": "~4.16.1",
+    "express-validator": "^6.12.0",
+    "fs": "0.0.1-security",
+    "gcp-metadata": "^4.3.0",
+    "google-auth-library": "^7.2.0",
+    "http-errors": "~1.6.3",
+    "jimp": "^0.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.12.14",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.2",
+    "node-uuid": "^1.4.8",
+    "nodemailer": "^6.6.2",
+    "randomstring": "^1.2.1",
+    "twilio": "^3.65.0",
+    "uuid": "^8.3.2"
+  }
+}
