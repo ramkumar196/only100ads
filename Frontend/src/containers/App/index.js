@@ -28,6 +28,7 @@ import {
 import {getUser} from "../../appRedux/actions/Auth";
 import ForgotPassword from "../ForgotPassword";
 import ResetPassword from "../ResetPassword";
+import Home from "../Home"
 
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
@@ -114,9 +115,9 @@ class App extends Component {
 
     if (location.pathname === '/') {
       if (token === null) {
-        return ( <Redirect to={'/signin'}/> );
+        return ( <Redirect to={'/'}/> );
       } else if (initURL === '' || initURL === '/' || initURL === '/signin') {
-        return ( <Redirect to={'/sample'}/> );
+        return ( <Redirect to={'/ads'}/> );
       } else {
         return ( <Redirect to={initURL}/> );
       }
@@ -137,6 +138,8 @@ class App extends Component {
             <Route exact path='/signup' component={SignUp}/>
             <Route exact path='/forgot-password' component={ForgotPassword}/>
             <Route exact path='/reset-password/:id' component={ResetPassword}/>
+            <Route exact path='/home' component={Home}/>
+
 
             <RestrictedRoute path={`${match.url}`} history={this.props.history} token={token}
                              component={MainApp}/>

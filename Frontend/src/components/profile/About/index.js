@@ -1,8 +1,9 @@
 import React from "react";
 import {Col, Row, Tabs} from "antd";
 import Widget from "components/Widget";
-import {aboutList} from '../../../routes/socialApps/Profile/data'
+import {aboutList} from '../../../routes/Profile/data'
 import AboutItem from "./AboutItem";
+import EasyEdit from 'react-easy-edit';
 
 
 const TabPane = Tabs.TabPane;
@@ -24,7 +25,7 @@ class About extends React.Component {
               </Row>
             </div>
           </TabPane>
-          <TabPane tab="Work" key="2">
+          {/* <TabPane tab="Work" key="2">
             <div className="gx-mb-2">
               <Row>{aboutList.map((about, index) =>
                 <Col key={index} xl={8} lg={12} md={12} sm={12} xs={24}>
@@ -33,8 +34,8 @@ class About extends React.Component {
               )}
               </Row>
             </div>
-          </TabPane>
-          <TabPane tab="Education" key="3">
+          </TabPane> */}
+          {/* <TabPane tab="Education" key="3">
             <div className="gx-mb-2">
               <Row>
                 {aboutList.map((about, index) =>
@@ -45,7 +46,7 @@ class About extends React.Component {
                 )}
               </Row>
             </div>
-          </TabPane>
+          </TabPane> */}
         </Tabs>
       </Widget>
     );

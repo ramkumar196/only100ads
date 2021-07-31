@@ -14,12 +14,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var whatsappRouter = require('./routes/whatsapp');
 var hashtagsRouter = require('./routes/hashtags');
+var accountRouter = require('./routes/account');
+
 
 var verifyToken = require('./utils/jwt');
 
 var adRouter = require('./routes/ads');
-
-
 
 var app = express();
 
@@ -37,6 +37,8 @@ app.use('/users', usersRouter);
 app.use('/whatsapp', whatsappRouter);
 app.use('/ads', adRouter);
 app.use('/hashtags', hashtagsRouter);
+app.use('/account', accountRouter);
+
 
 
 

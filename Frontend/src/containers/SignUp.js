@@ -131,6 +131,48 @@ class SignUp extends React.Component {
             </Form.Item>
 
             <Form.Item
+              name="website"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your website!',
+                },
+                {
+                  type: 'url',
+                  message: 'Please input your valid url!',
+                },
+                // ({ getFieldValue }) => ({
+                //   async validator(_, value) {
+                //     console.log(value);
+                //     try {
+                //       const resp = await axios.post('users/validateExistingFields', { "key": "email", "value": value });
+                //       return Promise.resolve(true);
+
+                //     } catch (error) {
+                //       return Promise.reject(new Error("Email already in use"));
+                //     }
+                //   }
+                // }),
+              ]}
+              hasFeedback
+            >
+              <Input prefix={<Icon type="website" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Your Website" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+
+            <Form.Item
               name="confirm"
               dependencies={['password']}
               hasFeedback

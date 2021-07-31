@@ -7,7 +7,10 @@ const path = require('path');
 var usersModel = require('../models/users');
 var adModel = require('../models/ads');
 const mongoose = require('mongoose');
-var Jimp = require('jimp');
+const sharp = require("sharp");
+const sharpStream = sharp({
+  failOnError: false
+});
 
 const { formatAdResponse, extractHastags, replaceHastags } = require('../utils/formatResponse')
 
@@ -39,6 +42,9 @@ var upload = multer({ storage: storage }).single('adMedia');
 var { v4 } = require('uuid');
 var randomstring = require("randomstring");
 
+
+
+
 router.post('/uploadAdMedia',
   async function (req, res, next) {
     const errors = validationResult(req);
@@ -64,6 +70,25 @@ router.post('/uploadAdMedia',
           return res.status(422).json({ message: "File is required!" });
         }
         try {
+          const promises = [];
+          promises.push(
+            sharp(req.file.path)
+            .resize(600, 400)
+            .toFile("uploads/Ads/600X400_"+req.file.filename), function(err) {
+              console.log("sharp error",err);
+              // output.jpg is a 300 pixels wide and 200 pixels high image
+              // containing a scaled and cropped version of input.jpg
+            });
+          Promise.all(promises)
+          .then(res => { console.log("Done!", res); })
+          .catch(err => {
+            console.error("Error processing files, let's clean it up", err);
+            try {
+              // fs.unlinkSync("originalFile.jpg");
+              // fs.unlinkSync("optimized-500.jpg");
+              // fs.unlinkSync("optimized-500.webp");
+            } catch (e) {}
+          });
           //await putS3Object(req.file.buffer,req.file.originalname);
           res.status(200).json({ message: "Success", details: { "fileName": req.file.filename, "files": req.file } });
         } catch (error) {
@@ -75,7 +100,7 @@ router.post('/uploadAdMedia',
   });
 
 router.post('/create',
-  body('adMedia').not().isEmpty().withMessage('must not be empty'),
+  //body('adMedia').not().isEmpty().withMessage('must not be empty'),
   body('adText').not().isEmpty().withMessage('must not be empty'),
   async function (req, res, next) {
     const errors = validationResult(req);
@@ -120,20 +145,29 @@ router.get('/list',
     } else {
 
       try {
-        console.log("herererer1111");
 
-        let search = req.query.keywords;
-        console.log("herererer1111", search);
+        let search = req.query.hashtags;
+        let page = req.query.page;
+
 
         let match_array = {
-          'createdBy': new mongoose.Types.ObjectId(req.userId),
+         // 'createdBy': new mongoose.Types.ObjectId(req.userId),
           'adStatus': true
         };
 
-        if (search && search.hashtags) {
-          match_array = { $text: { $search: search.hashtags } }
-
+        if (search) {
+          match_array = { hashtags: { $in: search.split() } }
         }
+        console.log(match_array);
+
+        let offset = 0;
+        let limit = 10;
+
+        if(page && page != 0){
+          offset = page * 10;
+        }
+
+        console.log("match_array",match_array);
 
         var arguments = [
           {
@@ -162,23 +196,116 @@ router.get('/list',
 
                 }
               },
-              'username': '$user.username',
-              'profileImage': '$user.profileImage',
+              'userName': '$user.userName',
+              'profileImage': '$user.profileImage.image',
               'adImages': '$adImages',
               'adHtmlText': '$adHtmlText',
               'hashtags': '$hashtags',
             }
           },
-          { '$sort': { 'createdAt': -1 } }
+          { '$sort': { 'createdAt': -1 } },
+          { '$limit': limit},
+          { '$skip': offset}
 
         ]
+
+        console.log("arguments",arguments);
 
         let ads = await adModel.aggregate(arguments);
         if (ads.length > 0) {
           let adList = await formatAdResponse(req, ads);
-          res.status(200).json({ message: "Success", details: { "ads": adList } })
+          res.status(200).json({ message: "Success", details: adList })
         } else {
-          res.status(200).json({ message: "No Data" });
+          res.status(200).json({ message: "No Data", details: [] });
+        }
+      } catch (error) {
+        res.status(400).json({ message: "Failed", error: error });
+
+      }
+    }
+  });
+
+  router.get('/list-no-auth',
+  async function (req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json(errors)
+    } else {
+
+      try {
+
+        let search = req.query.hashtags;
+        let page = req.query.page;
+
+
+        let match_array = {
+         // 'createdBy': new mongoose.Types.ObjectId(req.userId),
+          'adStatus': true
+        };
+
+        if (search) {
+          match_array = { hashtags: { $in: search.split() } }
+        }
+        console.log(match_array);
+
+        let offset = 0;
+        let limit = 10;
+
+        if(page && page != 0){
+          offset = page * 10;
+        }
+
+        console.log("match_array",match_array);
+
+        var arguments = [
+          {
+            '$match': match_array,
+          },
+          {
+            '$lookup': {
+              'from': 'users',
+              'localField': 'createdBy',
+              'foreignField': '_id',
+              'as': 'user',
+            },
+          },
+          { '$unwind': '$user' },
+          {
+            '$project': {
+              '_id': 1,
+              'adText': '$adText',
+              'createdAt': '$createdAt',
+              'createdAtFormat': {
+                '$dateFromString': {
+                  'dateString': '$createdAt',
+                  'timezone': 'Asia/Kolkata',
+                  'format': "%d-%m-%Y",
+                  'onError': '$createdAt'
+
+                }
+              },
+              'userName': '$user.userName',
+              'profileImage': '$user.profileImage.image',
+              'adImages': '$adImages',
+              'adHtmlText': '$adHtmlText',
+              'hashtags': '$hashtags',
+            }
+          },
+          { '$sort': { 'createdAt': -1 } },
+          { '$limit': limit},
+          { '$skip': offset}
+
+        ]
+
+        console.log("arguments",arguments);
+
+        let ads = await adModel.aggregate(arguments);
+        if (ads.length > 0) {
+          let adList = await formatAdResponse(req, ads);
+          res.status(200).json({ message: "Success", details: adList })
+        } else {
+          res.status(200).json({ message: "No Data", details: [] });
         }
       } catch (error) {
         res.status(400).json({ message: "Failed", error: error });

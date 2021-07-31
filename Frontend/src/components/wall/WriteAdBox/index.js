@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { PlusOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Divider, Input, Modal, Upload, Mentions } from "antd";
+import { Avatar, Button, Card, Divider, Input, Modal, Upload, Mentions, Alert, Space} from "antd";
 import axios from 'util/Api';
 import { adCreate } from "../../../appRedux/actions/ManageAd";
 import { connect } from "react-redux";
@@ -16,8 +16,11 @@ class WriteAdBox extends Component {
     previewImage: '',
     fileList: [],
     isOpen: false,
-    hashtags:[]
+    hashtags:[],
+    postSucess:false
   };
+
+
 
   onChange = async(value) => {
     this.setState({
@@ -58,12 +61,15 @@ class WriteAdBox extends Component {
   handleAddPost() {
     this.props.addPost(this.state.commentText, this.state.fileList);
     this.setState({
+      postSucess:true,
       commentText: '',
       previewVisible: false,
       previewImage: '',
       fileList: [],
       isOpen: false,
+      hashtags:[]
     });
+    this.props.adListFunc();
   }
 
   onChange(e) {
@@ -71,6 +77,7 @@ class WriteAdBox extends Component {
   }
 
   render() {
+
     const {previewVisible, previewImage, fileList} = this.state;
     const isEnabled = this.state.fileList.length === 0 && this.state.commentText === "";
     const uploadButton = (
@@ -86,7 +93,7 @@ class WriteAdBox extends Component {
     return (
       <Card className="gx-card">
         <div className="gx-media gx-mb-2">
-          <Avatar className="gx-size-50 gx-mr-3" src={this.props.user.image}/>
+          <Avatar className="gx-size-50 gx-mr-3" src={this.props.userDetails.userImage}/>
           <div className="gx-media-body">
           <Mentions rows={4}
             value={this.state.commentText}
@@ -133,6 +140,9 @@ class WriteAdBox extends Component {
                   onClick={this.handleAddPost.bind(this)}>SEND
           </Button>
         </div>
+        {this.state.postSucess === true &&
+          <Alert style={{margin:"5px"}}  message="Ad created!!!" type="success" showIcon closable />
+          }
       </Card>
     )
   }

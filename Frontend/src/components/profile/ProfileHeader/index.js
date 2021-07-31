@@ -15,7 +15,7 @@ const ProfileHeader = () => {
               <p className="gx-mb-0 gx-fs-lg">Florida, USA</p>
             </div>
           </div>
-          <div className="gx-profile-banner-top-right">
+          {/* <div className="gx-profile-banner-top-right">
             <ul className="gx-follower-list">
               <li>
                 <span className="gx-follower-title gx-fs-lg gx-font-weight-medium">2k+</span>
@@ -28,10 +28,10 @@ const ProfileHeader = () => {
                 <span className="gx-fs-sm">Friends</span>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="gx-profile-banner-bottom">
-          <div className="gx-tab-list">
+          {/* <div className="gx-tab-list">
             <ul className="gx-navbar-nav">
               <li>
                 <span className="gx-link">Timeline</span>
@@ -49,11 +49,11 @@ const ProfileHeader = () => {
                 <span className="gx-link">More</span>
               </li>
             </ul>
-          </div>
-          <span className="gx-link gx-profile-setting">
+          </div> */}
+          {/* <span className="gx-link gx-profile-setting">
             <i className="icon icon-setting gx-fs-lg gx-mr-2 gx-mr-sm-3 gx-d-inline-flex gx-vertical-align-middle"/>
             <span className="gx-d-inline-flex gx-vertical-align-middle gx-ml-1 gx-ml-sm-0">Setting</span>
-          </span>
+          </span> */}
         </div>
       </div>
     </div>

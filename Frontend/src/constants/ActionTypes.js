@@ -31,5 +31,13 @@ export const INIT_URL = 'INIT_URL';
 export const USER_DATA = 'user_data';
 export const USER_TOKEN_SET = 'user_token_set';
 export const AD_CREATE = 'create_ad';
+export const AD_LIST = 'ad_list';
+export const USER_DETAILS = 'user_details';
+export const HASHTAG_LIST = 'hashtag_list';
+export const CLEAR_AD_LIST = 'clear_hashtag_list';
+export const AD_NO_AUTH_LIST = "ad_no_auth_list";
+
+
+
 
 

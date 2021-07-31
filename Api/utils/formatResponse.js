@@ -1,5 +1,6 @@
 var fs = require('fs');
 var _ = require('lodash');
+var moment = require('moment');
 var hashtagModel = require('../models/hashtags');
 let formatAdResponse = async function (req,adList) {
 
@@ -10,15 +11,54 @@ let formatAdResponse = async function (req,adList) {
         element.adText = value.adText;
         element.adImages = [];
         _.forEach(value.adImages, function(value, key) {
+            value.image_600_400 = fullUrl+"/Ads/600X400_"+value.image;
             value.image = fullUrl+"/Ads/"+value.image;
             element.adImages.push(value);
         });
-        element.createdAt = value.createdAt;
+        element.userName = value.userName;
+        element.hashtags = value.hashtags;
+        element.userImage = fullUrl+"/Users/"+value.profileImage;
+        element.createdAt = moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a');
 
         formattedResponse.push(element);
       });
 
       return formattedResponse;
+
+
+}
+
+let formatUserResponse = async function (req,userdetails) {
+  var fullUrl = req.protocol + '://' + req.get('host');
+  let element = {};
+
+      try {
+        if(userdetails.profileImage) {
+          _.forEach(userdetails.profileImage, function(value, key) {
+            value.image = fullUrl+"/Users/"+value.image;
+            element.profileImage = value;
+        });
+        } else {
+          element.profileImage = '';
+        }        
+  
+        if(userdetails.email)
+        element.email = userdetails.email;
+
+        if(element.profileImage && element.profileImage.image)
+        element.userImage = element.profileImage.image;
+        else
+        element.userImage = '';
+
+  
+        if(userdetails.userName)
+        element.userName = userdetails.userName;
+
+  } catch (error) {
+    console.log(error)
+  }
+  
+    return element;
 
 
 }
@@ -76,4 +116,4 @@ let replaceHastags = async function(text)
 
 }
 
-module.exports = {formatAdResponse,extractHastags,replaceHastags};
+module.exports = {formatAdResponse,extractHastags,replaceHastags,formatUserResponse};

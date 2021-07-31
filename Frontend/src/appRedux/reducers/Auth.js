@@ -1,4 +1,4 @@
-import {AD_CREATE, INIT_URL, SIGNOUT_USER_SUCCESS, USER_DATA, USER_TOKEN_SET} from "../../constants/ActionTypes";
+import { INIT_URL, SIGNOUT_USER_SUCCESS, USER_DATA, USER_TOKEN_SET,AD_CREATE,AD_LIST,USER_DETAILS,HASHTAG_LIST, CLEAR_AD_LIST,AD_NO_AUTH_LIST} from "../../constants/ActionTypes";
 
 const INIT_STATE = {
   token: JSON.parse(localStorage.getItem('token')),
@@ -42,6 +42,39 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         ads: action.payload,
+      };
+    }
+
+    case AD_LIST: {
+      return {
+        ...state,
+        adsList: action.payload,
+      };
+    }
+    case AD_NO_AUTH_LIST: {
+      return {
+        ...state,
+        adNoAuthList: action.payload,
+      };
+    }
+    case CLEAR_AD_LIST: {
+      return {
+        ...state,
+        adsList: [],
+      };
+    }
+
+    case USER_DETAILS: {
+      return {
+        ...state,
+        userDetails: action.payload,
+      };
+    }
+
+    case HASHTAG_LIST: {
+      return {
+        ...state,
+        hashtagsList: action.payload,
       };
     }
 

@@ -15,7 +15,7 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: {
       //'@primary-color': '#038fde',
-      '@primary-color': '#A172E7'
+      '@primary-color': '#5fb2a2'
     }
   }),
   overrideProcessEnv({

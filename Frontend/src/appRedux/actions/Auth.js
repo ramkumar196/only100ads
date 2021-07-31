@@ -173,6 +173,7 @@ export const validateExistingFields = (data) => {
 
 
 export const userSignOut = () => {
+  alert("herer!!!!!!!!!!!!!!!:-)")
   return (dispatch) => {
     dispatch({type: FETCH_START});
     setTimeout(() => {

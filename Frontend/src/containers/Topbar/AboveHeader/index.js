@@ -71,11 +71,11 @@ class AboveHeader extends Component {
           <div className="gx-container">
             <div className="gx-header-horizontal-nav-flex">
               <HorizontalNav/>
-              <ul className="gx-header-notifications gx-ml-auto">
+              {/* <ul className="gx-header-notifications gx-ml-auto">
                 <li><span className="gx-pointer gx-d-block"><i className="icon icon-menu-lines"/></span></li>
                 <li><span className="gx-pointer gx-d-block"><i className="icon icon-setting"/></span></li>
                 <li><span className="gx-pointer gx-d-block"><i className="icon icon-apps-new"/></span></li>
-              </ul>
+              </ul> */}
             </div>
           </div>
         </div>

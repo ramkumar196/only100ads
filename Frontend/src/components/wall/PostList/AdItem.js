@@ -23,64 +23,64 @@ class AdItem extends Component {
       commentList: []
     },
   }
-  _handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      console.log("user --->", this.state.user)
-      const commentData = {
-        user: this.state.user,
-        comment: this.state.message,
-        date: new Date().toString(),
-        likeCount: 0,
-        isLike: true,
-        commentList: []
-      }
+  // _handleKeyPress = (e) => {
+  //   if (e.key === 'Enter') {
+  //     console.log("user --->", this.state.user)
+  //     const commentData = {
+  //       user: this.state.user,
+  //       comment: this.state.message,
+  //       date: new Date().toString(),
+  //       likeCount: 0,
+  //       isLike: true,
+  //       commentList: []
+  //     }
 
-      let commentArray = this.state.post.commentList;
-      commentArray.push(commentData);
-      this.setState((previousState) => ({
-        post: {
-          ...previousState.post,
-          commentList: commentArray
-        }, message: ''
-      }));
-    }
-  }
+  //     let commentArray = this.state.post.commentList;
+  //     commentArray.push(commentData);
+  //     this.setState((previousState) => ({
+  //       post: {
+  //         ...previousState.post,
+  //         commentList: commentArray
+  //       }, message: ''
+  //     }));
+  //   }
+  // }
 
   componentWillMount() {
-    this.setState({post: this.props.postData, user: this.props.user})
+    this.setState({post: this.props.post, user: this.props.user})
   }
 
-  updateCommentValue(evt) {
-    this.setState({
-      message: evt.target.value
-    });
-  }
+  // updateCommentValue(evt) {
+  //   this.setState({
+  //     message: evt.target.value
+  //   });
+  // }
 
-  handleLikeToggle() {
-    this.setState((previousState) => ({
-      post: {
-        ...previousState.post,
-        isLike: !previousState.post.isLike,
-        likeCount: (previousState.post.isLike === true ? previousState.post.likeCount - 1 : previousState.post.likeCount + 1)
-      }
-    }));
-  }
+  // handleLikeToggle() {
+  //   this.setState((previousState) => ({
+  //     post: {
+  //       ...previousState.post,
+  //       isLike: !previousState.post.isLike,
+  //       likeCount: (previousState.post.isLike === true ? previousState.post.likeCount - 1 : previousState.post.likeCount + 1)
+  //     }
+  //   }));
+  // }
 
   render() {
-    const {createdAt, adImages, adText} = this.state.post;
+    //const {createdAt, adImages, adText, userName, userImage} = this.state.post;
     return (
       <Card className="gx-card">
         <div className="gx-wall-content">
           <div className="gx-media gx-wall-user-info gx-flex-nowrap gx-align-items-center">
-             {/* <Avatar className="gx-mr-3 gx-mb-2 gx-size-50" src={user.image}/> */}
+             <Avatar className="gx-mr-3 gx-mb-2 gx-size-50" src={this.props.post.userImage}/>
             <div className="gx-media-body">
-              {/* <h5 className="gx-wall-user-title">{user.name}</h5> */}
-              <DisplayDate date={createdAt}/>
+             <h5 className="gx-wall-user-title">{this.props.post.userName}</h5>
+              <DisplayDate date={this.props.post.createdAt}/>
             </div>
           </div>
-          <p>{adText}</p>
+          <p>{this.props.post.adText}</p>
           <div className="gx-wall-medialist">
-            {adImages.length > 0 ? <MediaList mediaList={adImages}/> : null}
+            {this.props.post.adImages.length > 0 ? <MediaList mediaList={this.props.post.adImages}/> : null}
           </div>
           <div className="gx-flex-row gx-mb-2 gx-mb-xl-3">
             {/* <p className="gx-fs-sm gx-pointer gx-mr-3 gx-text-grey">

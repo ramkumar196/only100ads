@@ -41,14 +41,34 @@ class HorizontalNav extends Component {
         defaultOpenKeys={[defaultOpenKeys]}
         selectedKeys={[selectedKeys]}
         mode="horizontal">
-
-        <SubMenu className={this.getNavStyleSubMenuClass(navStyle)} key="main"
-                 title={<IntlMessages id="sidebar.main"/>}>
-          <Menu.Item key="sample">
-            <Link to="/sample"><i className="icon icon-widgets"/>
-              <IntlMessages id="sidebar.samplePage"/></Link>
+          { this.props.token &&
+           <Menu.Item key="ads">
+           <Link to="/ads"><i className="icon icon-widgets"/>
+           Listings
+             {/* <IntlMessages id="sidebar.samplePage"/> */}
+             </Link>
+            </Menu.Item>
+          }
+        { this.props.token &&
+          <Menu.Item key="profile">
+            <Link to="/profile"><i className="icon icon-profile"/>
+            Profile
+              {/* <IntlMessages id="sidebar.samplePage"/> */}
+              </Link>
           </Menu.Item>
-        </SubMenu>
+          }
+          <Menu.Item key="profile">
+            <Link to="/home"><i className="icon icon-home"/>
+            Home
+              {/* <IntlMessages id="sidebar.samplePage"/> */}
+              </Link>
+          </Menu.Item>
+          <Menu.Item key="aboutus">
+            <Link to="/about-us"><i className="icon icon-profile"/>
+            About Us
+              {/* <IntlMessages id="sidebar.samplePage"/> */}
+              </Link>
+          </Menu.Item>
       </Menu>
 
     );

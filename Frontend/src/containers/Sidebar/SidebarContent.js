@@ -15,7 +15,7 @@ import {
   THEME_TYPE_LITE
 } from "../../constants/ThemeSetting";
 import IntlMessages from "../../util/IntlMessages";
-
+import {getUser} from "../../appRedux/actions/Auth";
 class SidebarContent extends Component {
 
   getNoHeaderClass = (navStyle) => {
@@ -49,11 +49,30 @@ class SidebarContent extends Component {
               selectedKeys={[selectedKeys]}
               theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
               mode="inline">
+                { this.props.token  &&
+                <Menu.Item key="ads">
+                <Link to="/ads"><i className="icon icon-widgets"/>
+                  Listings</Link>
+                </Menu.Item>
 
-              <Menu.Item key="sample">
-                <Link to="/sample"><i className="icon icon-widgets"/>
-                  <IntlMessages id="sidebar.samplePage"/></Link>
-              </Menu.Item>
+                }
+                { this.props.token  &&
+
+                 <Menu.Item key="profile">
+                  <Link to="/profile"><i className="icon icon-account"/>
+                  Profile</Link>
+                </Menu.Item>
+                }
+
+                <Menu.Item key="home">
+                  <Link to="/home"><i className="icon icon-home"/>
+                  Home</Link>
+                </Menu.Item>
+                <Menu.Item key="aboutus">
+                  <Link to="/about-us"><i className="icon icon-about"/>
+                  About Us</Link>
+                </Menu.Item>
+
 
             </Menu>
           </CustomScrollbars>
@@ -64,9 +83,11 @@ class SidebarContent extends Component {
 }
 
 SidebarContent.propTypes = {};
-const mapStateToProps = ({settings}) => {
+const mapStateToProps = ({settings,auth}) => {
   const {navStyle, themeType, locale, pathname} = settings;
-  return {navStyle, themeType, locale, pathname}
+  const {authUser, token, initURL} = auth;
+
+  return {navStyle, themeType, locale, pathname, token}
 };
-export default connect(mapStateToProps)(SidebarContent);
+export default connect(mapStateToProps,{getUser})(SidebarContent);
 

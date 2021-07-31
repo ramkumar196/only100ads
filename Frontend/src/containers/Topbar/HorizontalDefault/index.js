@@ -96,7 +96,7 @@ class HorizontalDefault extends Component {
                 <img alt="" src={require("assets/images/w-logo.png")}/></Link>
               <Link to="/" className="gx-d-none gx-d-lg-block gx-pointer gx-mr-xs-5 gx-logo">
                 <img alt="" src={require("assets/images/logo-white.png")}/></Link>
-              <div className="gx-header-search gx-d-none gx-d-lg-flex">
+              {/* <div className="gx-header-search gx-d-none gx-d-lg-flex">
                 <SearchBox styleName="gx-lt-icon-search-bar-lg"
                            placeholder="Search in app..."
                            onChange={this.updateSearchChatUser.bind(this)}
@@ -107,10 +107,10 @@ class HorizontalDefault extends Component {
                   <Option value="lucy">Apps</Option>
                   <Option value="Yiminghe">Blogs</Option>
                 </Select>
-              </div>
+              </div> */}
 
               <ul className="gx-header-notifications gx-ml-auto">
-                <li className="gx-notify gx-notify-search gx-d-inline-block gx-d-lg-none">
+                {/* <li className="gx-notify gx-notify-search gx-d-inline-block gx-d-lg-none">
                   <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={
                     <div className="gx-d-flex">
                       <Dropdown overlay={menu}>
@@ -127,15 +127,15 @@ class HorizontalDefault extends Component {
                     <span className="gx-pointer gx-d-block"><i className="icon icon-search-new"/></span>
 
                   </Popover>
-                </li>
-                <li className="gx-notify">
+                </li> */}
+                {/* <li className="gx-notify">
                   <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={<AppNotification/>}
                            trigger="click">
                     <span className="gx-pointer gx-d-block"><i className="icon icon-notification"/></span>
                   </Popover>
-                </li>
+                </li> */}
 
-                <li className="gx-msg">
+                {/* <li className="gx-msg">
                   <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight"
                            content={<MailNotification/>} trigger="click">
                 <span className="gx-pointer gx-status-pos gx-d-block">
@@ -143,16 +143,16 @@ class HorizontalDefault extends Component {
                 <span className="gx-status gx-status-rtl gx-small gx-orange"/>
                 </span>
                   </Popover>
-                </li>
-                <li className="gx-language">
+                </li> */}
+                {/* <li className="gx-language">
                   <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight"
                            content={this.languageMenu()} trigger="click">
               <span className="gx-pointer gx-flex-row gx-align-items-center"><i
                 className={`flag flag-24 flag-${locale.icon}`}/>
               </span>
                   </Popover>
-                </li>
-                <li className="gx-user-nav"><UserInfo/></li>
+                </li> */}
+                {/* <li className="gx-user-nav"><UserInfo/></li> */}
               </ul>
             </div>
           </div>
@@ -161,11 +161,11 @@ class HorizontalDefault extends Component {
           <div className="gx-container">
             <div className="gx-header-horizontal-nav-flex">
               <HorizontalNav/>
-              <ul className="gx-header-notifications gx-ml-auto">
+              {/* <ul className="gx-header-notifications gx-ml-auto">
                 <li><span className="gx-pointer gx-d-block"><i className="icon icon-menu-lines"/></span></li>
                 <li><span className="gx-pointer gx-d-block"><i className="icon icon-setting"/></span></li>
                 <li><span className="gx-pointer gx-d-block"><i className="icon icon-apps-new"/></span></li>
-              </ul>
+              </ul> */}
             </div>
           </div>
         </div>
