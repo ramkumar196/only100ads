@@ -103,7 +103,9 @@ router.post('/uploadUserProfile',
 router.post('/updateProfile',
 body('userName').not().isEmpty().withMessage('must not be empty'),
 body('email').not().isEmpty().withMessage('must not be empty'),
-body('profileImage').not().isEmpty().withMessage('must not be empty'),
+body('website').not().isEmpty().withMessage('must not be empty'),
+body('website').isURL().withMessage('must not be empty'),
+//body('profileImage').not().isEmpty().withMessage('must not be empty'),
 async function (req, res, next) {
   const errors = validationResult(req);
 

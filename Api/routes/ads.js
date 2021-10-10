@@ -197,6 +197,7 @@ router.get('/list',
                 }
               },
               'userName': '$user.userName',
+              'website': '$user.website',
               'profileImage': '$user.profileImage.image',
               'adImages': '$adImages',
               'adHtmlText': '$adHtmlText',
@@ -253,12 +254,13 @@ router.get('/list',
         let limit = 10;
 
         if(page && page != 0){
-          offset = page * 10;
+          limit = 10*parseInt(page);
+          offset = limit -10;
         }
 
         console.log("match_array",match_array);
 
-        var arguments = [
+        let arguments = [
           {
             '$match': match_array,
           },
@@ -286,24 +288,77 @@ router.get('/list',
                 }
               },
               'userName': '$user.userName',
+              'website': '$user.website',
               'profileImage': '$user.profileImage.image',
               'adImages': '$adImages',
               'adHtmlText': '$adHtmlText',
               'hashtags': '$hashtags',
             }
           },
-          { '$sort': { 'createdAt': -1 } },
-          { '$limit': limit},
-          { '$skip': offset}
+        ];
+        
+        let totalCount = 0
 
-        ]
+        try {
+        let countArguments = [
+          {
+            '$match': match_array,
+          },
+          {
+            '$lookup': {
+              'from': 'users',
+              'localField': 'createdBy',
+              'foreignField': '_id',
+              'as': 'user',
+            },
+          },
+          { '$unwind': '$user' },
+          {
+            '$project': {
+              '_id': 1,
+              'adText': '$adText',
+              'createdAt': '$createdAt',
+              'createdAtFormat': {
+                '$dateFromString': {
+                  'dateString': '$createdAt',
+                  'timezone': 'Asia/Kolkata',
+                  'format': "%d-%m-%Y",
+                  'onError': '$createdAt'
 
+                }
+              },
+              'userName': '$user.userName',
+              'website': '$user.website',
+              'profileImage': '$user.profileImage.image',
+              'adImages': '$adImages',
+              'adHtmlText': '$adHtmlText',
+              'hashtags': '$hashtags',
+            }
+          },
+        ];;
+        countArguments.push({ $group: { _id: null, count: { $sum: 1 } } });
+        let adsCount = await adModel.aggregate(countArguments);
+ 
+        console.log("adsCount",adsCount);
+
+        totalCount = (adsCount.length > 0)?adsCount[0].count:0;
+        }
+        catch(err){
+          console.log(err);
+        }
+
+        arguments.push({ '$sort': { 'createdAt': -1 }});
+        arguments.push({ '$limit': limit});
+        arguments.push({ '$skip': offset});
         console.log("arguments",arguments);
 
         let ads = await adModel.aggregate(arguments);
+
+
+
         if (ads.length > 0) {
           let adList = await formatAdResponse(req, ads);
-          res.status(200).json({ message: "Success", details: adList })
+          res.status(200).json({ message: "Success", details: adList,total:totalCount })
         } else {
           res.status(200).json({ message: "No Data", details: [] });
         }
@@ -314,3 +369,4 @@ router.get('/list',
     }
   });
 module.exports = router;
+ 

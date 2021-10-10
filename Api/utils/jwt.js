@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken');
 const path = require('path');
 let verifyToken = async function (req,res,next) {
     console.log("req.path",req.path);
-    const nonSecurePaths = ['/users/login','/users/register','/users/resetPassword','/users/forgotPassword', '/users/validateExistingFields','/ads/list-no-auth'];
+    const nonSecurePaths = ['/users/login','/users/register','/users/resetPassword','/users/forgotPassword', '/users/validateExistingFields','/ads/list-no-auth','/hashtags/list'];
     if (nonSecurePaths.includes(req.path)) return next();
     var privateKey = fs.readFileSync(path.join(__dirname,'../server.crt'));
     let token = (req.headers.authorization)?req.headers.authorization.split(" ")[1]:"";

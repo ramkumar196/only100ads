@@ -203,6 +203,8 @@ router.post('/register',
   body('email').isEmail().withMessage('must be valid'),
   body('password').not().isEmpty().withMessage('must not be empty'),
   body('userName').not().isEmpty().withMessage('must not be empty'),
+  body('website').not().isEmpty().withMessage('must not be empty'),
+  body('website').isURL().withMessage('must not be empty'),
   body('userName').custom(value => {
     return usersModel.find({userName:value}).then(user => {
       if (user.length > 0) {

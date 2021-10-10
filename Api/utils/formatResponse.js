@@ -16,7 +16,9 @@ let formatAdResponse = async function (req,adList) {
             element.adImages.push(value);
         });
         element.userName = value.userName;
+        _.filter()
         element.hashtags = value.hashtags;
+        element.website = value.website;
         element.userImage = fullUrl+"/Users/"+value.profileImage;
         element.createdAt = moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a');
 
@@ -50,6 +52,7 @@ let formatUserResponse = async function (req,userdetails) {
         else
         element.userImage = '';
 
+        element.website = userdetails.website;
   
         if(userdetails.userName)
         element.userName = userdetails.userName;

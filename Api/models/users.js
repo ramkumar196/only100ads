@@ -8,6 +8,7 @@ const userSchema = new Schema({
   password: String,
   userName: String,
   resetId: String,
+  website:String,
   profileImage:Schema.Types.Mixed
 
 },{ timestamps: true});
